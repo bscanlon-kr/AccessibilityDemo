@@ -1,0 +1,25 @@
+name: Commit
+
+on:
+  push:
+
+jobs:
+  semantic_library_workflow:
+    name: push
+    # This is the pipeline Ground Kontrol uses for all of our libraries
+    # You may wish to create your own, comprised of some of our reusable actions, if they suit your needs
+    # Actions Repo: https://github.com/krogerco/Shared-CI-Action-Android
+    uses: krogertechnology/kap-np-android-workflows/.github/workflows/semantic_library_workflow.yml@main
+    # If this project will become an app, start with this basic pipeline:
+    # uses: krogertechnology/kap-np-android-workflows/.github/workflows/app_checks.yml@main
+    # or construct your own from our open source actions repo - https://github.com/krogerco/Shared-CI-Action-Android
+    with:
+      # ktlint_version: '0.46.1' use this for the app checks workflow
+      java_version: '17'
+      test_command: 'test' # delete this for the app checks workflow
+    secrets:
+      ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }} # delete this for the app checks workflow
+      ARTIFACTORY_PASSWORD: ${{ secrets.ARTIFACTORY_PASSWORD }} # delete this for the app checks workflow
+      KT_JFROG_USERID: ${{ secrets.KT_JFROG_USERID }}
+      KT_JFROG_TOKEN: ${{ secrets.KT_JFROG_TOKEN }}
+      REPO_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
